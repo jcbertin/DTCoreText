@@ -8,7 +8,106 @@
 
 #pragma mark - iOS
 
-#if TARGET_OS_IPHONE
+#if TARGET_ATV
+
+	#import "DTWeakSupport.h"
+
+	#define DTCORETEXT_SUPPORT_NS_ATTRIBUTES 0
+	#define DTCORETEXT_SUPPORT_NSPARAGRAPHSTYLE_TABS 0
+	#define DTCORETEXT_NEEDS_ATTRIBUTE_REPLACEMENT_LEAK_FIX 1
+	#define DTCORETEXT_FIX_14684188 0
+
+	#define NSFoundationVersionNumber10_6_8 751.62
+
+
+	@interface DTColor : NSObject
+	{
+	@private
+		CGColorRef _CGColor;
+	}
+	@property(nonatomic,readonly) CGColorRef CGColor;
+
+	+ (DTColor *)colorWithCGColor:(CGColorRef)cgColor;
+	- (DTColor *)initWithCGColor:(CGColorRef)cgColor;
+
+	+ (DTColor *)colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
+	- (DTColor *)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
+	@end
+
+	@interface DTImage : NSObject
+	@property(nonatomic,readonly) CGSize             size;             // reflects orientation setting. size is in pixels
+
+	+ (DTImage *)imageNamed:(NSString *)name;      // load from main bundle
+
+	- (id)initWithContentsOfFile:(NSString *)path;
+	- (id)initWithData:(NSData *)data;
+
+	- (void)drawInRect:(CGRect)rect;
+	@end
+
+	@interface DTFont : NSObject
+	{
+	@private
+		CTFontRef	_font;
+	}
+	@property(nonatomic,readonly,DT_WEAK_PROPERTY) NSString *familyName;
+	@property(nonatomic,readonly,DT_WEAK_PROPERTY) NSString *fontName;
+	@property(nonatomic,readonly)      CGFloat   pointSize;
+	@property(nonatomic,readonly)      CGFloat   ascender;
+	@property(nonatomic,readonly)      CGFloat   descender;
+	@property(nonatomic,readonly)      CGFloat   capHeight;
+	@property(nonatomic,readonly)      CGFloat   xHeight;
+	@property(nonatomic,readonly)      CGFloat   lineHeight;
+	@property(nonatomic,readonly)      CGFloat   leading;
+	@end
+
+	typedef struct DTEdgeInsets {
+		CGFloat top, left, bottom, right;  // specify amount to inset (positive) for each of the edges. values can be negative to 'outset'
+	} DTEdgeInsets;
+
+	static inline DTEdgeInsets DTEdgeInsetsMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) {
+		DTEdgeInsets insets = {top, left, bottom, right};
+		return insets;
+	}
+
+	typedef NS_ENUM(NSInteger, NSLineBreakMode) {		/* What to do with long lines */
+		NSLineBreakByWordWrapping = 0,     	/* Wrap at word boundaries, default */
+		NSLineBreakByCharWrapping,		/* Wrap at character boundaries */
+		NSLineBreakByClipping,		/* Simply clip */
+		NSLineBreakByTruncatingHead,	/* Truncate at head of line: "...wxyz" */
+		NSLineBreakByTruncatingTail,	/* Truncate at tail of line: "abcd..." */
+		NSLineBreakByTruncatingMiddle	/* Truncate middle of line:  "ab...yz" */
+	};
+
+	/* Values for NSWritingDirection */
+	enum {
+		NSWritingDirectionNatural       = -1,   // Determines direction using the Unicode Bidi Algorithm rules P2 and P3
+		NSWritingDirectionLeftToRight   = 0,    // Left to right writing direction
+		NSWritingDirectionRightToLeft   = 1     // Right to left writing direction
+	};
+	typedef NSInteger NSWritingDirection;
+
+	#define kCTTextAlignmentLeft		kCTLeftTextAlignment
+	#define kCTTextAlignmentRight		kCTRightTextAlignment
+	#define kCTTextAlignmentCenter		kCTCenterTextAlignment
+	#define kCTTextAlignmentJustified	kCTJustifiedTextAlignment
+	#define kCTTextAlignmentNatural		kCTNaturalTextAlignment
+
+	// runtime-check if NS-style attributes are allowed
+	static inline BOOL DTCoreTextModernAttributesPossible()
+	{
+		return NO;
+	}
+
+	// runtime-check if CoreText draws underlines
+	static inline BOOL DTCoreTextDrawsUnderlinesWithGlyphs()
+	{
+		return NO;
+	}
+
+	#define DTNSNumberFromCGFloat(x) [NSNumber numberWithFloat:x]
+
+#elif TARGET_OS_IPHONE
 
 	// Compatibility Aliases
 	@compatibility_alias DTColor	UIColor;
@@ -101,6 +200,7 @@
 		#define DTCORETEXT_NEEDS_ATTRIBUTE_REPLACEMENT_LEAK_FIX 1
 	#endif
 
+	#ifndef COREGRAPHICS_UTILS_H_
 	// NSValue has sizeValue on Mac, CGSizeValue on iOS
 	#define CGSizeValue sizeValue
 
@@ -119,6 +219,7 @@
 	{
 		return NSStringFromPoint(NSPointFromCGPoint(point));
 	}
+	#endif
 
 	// runtime-check if NS-style attributes are allowed
 	static inline BOOL DTCoreTextModernAttributesPossible()

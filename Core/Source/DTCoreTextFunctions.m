@@ -9,7 +9,12 @@
 #import "DTCoreTextFunctions.h"
 #import "DTLog.h"
 
-#if TARGET_OS_IPHONE
+#if TARGET_ATV
+CTFontRef DTCTFontCreateWithUIFont(DTFont *font)
+{
+	return CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
+}
+#elif TARGET_OS_IPHONE
 CTFontRef DTCTFontCreateWithUIFont(UIFont *font)
 {
 	return CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
@@ -18,7 +23,19 @@ CTFontRef DTCTFontCreateWithUIFont(UIFont *font)
 
 CTLineTruncationType DTCTLineTruncationTypeFromNSLineBreakMode(NSLineBreakMode lineBreakMode)
 {
-#if TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+#if TARGET_ATV
+	switch (lineBreakMode)
+	{
+		case NSLineBreakByTruncatingHead:
+			return kCTLineTruncationStart;
+			
+		case NSLineBreakByTruncatingMiddle:
+			return kCTLineTruncationMiddle;
+			
+		default:
+			return kCTLineTruncationEnd;
+	}
+#elif TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
 	switch (lineBreakMode)
 	{
 		case UILineBreakModeHeadTruncation:

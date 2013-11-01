@@ -16,8 +16,13 @@
 
 
 // external symbols generated via custom build rule and xxd
+#if TARGET_ATV
+extern unsigned char DTCoreText_default_css[];
+extern unsigned int DTCoreText_default_css_len;
+#else
 extern unsigned char default_css[];
 extern unsigned int default_css_len;
+#endif
 
 
 @implementation DTCSSStylesheet
@@ -42,7 +47,11 @@ extern unsigned int default_css_len;
 		if (!defaultDTCSSStylesheet)
 		{
 			// get the data from the external symbol
+#if TARGET_ATV
+			NSData *data = [NSData dataWithBytes:DTCoreText_default_css length:DTCoreText_default_css_len];
+#else
 			NSData *data = [NSData dataWithBytes:default_css length:default_css_len];
+#endif
 			NSString *cssString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			
 			defaultDTCSSStylesheet = [[DTCSSStylesheet alloc] initWithStyleBlock:cssString];

@@ -8,7 +8,14 @@
 
 #import "DTCompatibility.h"
 
-#if TARGET_OS_IPHONE
+#if TARGET_ATV
+/**
+ Creates a CTFont from a UIFont
+ @param font The `UIFont`
+ @returns The matching CTFont
+ */
+CTFontRef DTCTFontCreateWithUIFont(DTFont *font);
+#elif TARGET_OS_IPHONE
 /**
  Creates a CTFont from a UIFont
  @param font The `UIFont`

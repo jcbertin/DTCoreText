@@ -8,7 +8,23 @@
 
 #import <AvailabilityMacros.h>
 
-#if TARGET_OS_IPHONE
+#if TARGET_ATV
+
+/**
+ Implementations of methods on NSColor/UIColor which are missing on the other platform.
+ */
+@interface DTColor (HTML)
+
+
+/**
+ A quick method to return the alpha component of this UIColor by using the CGColorGetAlpha method.
+ @returns The floating point alpha value of this UIColor.
+ */
+- (CGFloat)alphaComponent;
+
+@end
+
+#elif TARGET_OS_IPHONE
 
 /**
  Implementations of methods on NSColor/UIColor which are missing on the other platform.

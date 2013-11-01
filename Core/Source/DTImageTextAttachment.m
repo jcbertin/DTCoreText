@@ -9,7 +9,7 @@
 #import "DTCoreText.h"
 #import "DTBase64Coding.h"
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_ATV
 	#import "DTAnimatedGIF.h"
 #endif
 
@@ -211,7 +211,7 @@ static NSCache *imageCache = nil;
 			// only local files we can directly load without punishment
 			if ([contentURL isFileURL])
 			{
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_ATV
 				NSString *ext = [[[contentURL lastPathComponent] pathExtension] lowercaseString];
 				
 				if ([ext isEqualToString:@"gif"])

@@ -10,7 +10,7 @@
 
 @interface NSCoder (DTCompatibility)
 
-#if !TARGET_OS_IPHONE
+#if TARGET_ATV || !TARGET_OS_IPHONE
 - (void)encodeCGSize:(CGSize)size forKey:(NSString *)key;
 - (CGSize)decodeCGSizeForKey:(NSString *)key;
 #endif

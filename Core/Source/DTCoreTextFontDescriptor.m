@@ -11,6 +11,10 @@
 #import "DTCompatibility.h"
 #import "DTCoreTextConstants.h"
 
+#if TARGET_ATV
+#import "NSHost+utils.h"
+#endif
+
 static NSCache *_fontCache = nil;
 static NSMutableDictionary *_fontOverrides = nil;
 
@@ -76,7 +80,13 @@ static BOOL _needsChineseFontCascadeFix = NO;
 		}
 	}
 	
-#if TARGET_OS_IPHONE
+#if TARGET_ATV
+	SimpleVersion version = [NSHost simpleVersion];
+    if (version.major>4)
+	{
+        _needsChineseFontCascadeFix = YES;
+	}
+#elif TARGET_OS_IPHONE
 	// workaround for iOS 5.x bug: global font cascade table has incorrect bold font for Chinese characters in Chinese locale
 	if (NSFoundationVersionNumber < DTNSFoundationVersionNumber_iOS_6_0)
 	{

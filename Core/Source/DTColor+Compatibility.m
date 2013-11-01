@@ -9,7 +9,18 @@
 #import "DTColor+Compatibility.h"
 #import "DTColorFunctions.h"
 
-#if TARGET_OS_IPHONE
+#if TARGET_ATV
+
+@implementation DTColor (HTML)
+
+- (CGFloat)alphaComponent
+{
+	return CGColorGetAlpha(self.CGColor);
+}
+
+@end
+
+#elif TARGET_OS_IPHONE
 
 @implementation UIColor (HTML)
 

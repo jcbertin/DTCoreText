@@ -8,7 +8,18 @@
 
 #import "DTImage+HTML.h"
 
-#if TARGET_OS_IPHONE
+#if TARGET_ATV
+
+@implementation DTImage (HTML)
+
+- (NSData *)dataForPNGRepresentation
+{
+	return nil;
+}
+
+@end
+
+#elif TARGET_OS_IPHONE
 
 @implementation UIImage (HTML)
 

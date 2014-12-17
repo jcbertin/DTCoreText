@@ -36,8 +36,13 @@
 
 	@interface DTImage : NSObject
 	@property(nonatomic,readonly) CGSize             size;             // reflects orientation setting. size is in pixels
+	@property(nonatomic,readonly) CGImageRef         CGImage;          // returns underlying CGImageRef or nil if CIImage based
+	- (CGImageRef)CGImage NS_RETURNS_INNER_POINTER CF_RETURNS_NOT_RETAINED;
+	@property(nonatomic,readonly) NSInteger          imageOrientation; // this will affect how the image is composited
+	@property(nonatomic,readonly) CGFloat            scale;
 
 	+ (DTImage *)imageNamed:(NSString *)name;      // load from main bundle
+	+ (DTImage *)imageWithCGImage:(CGImageRef)cgImage scale:(CGFloat)scale orientation:(NSInteger)orientation;
 
 	- (id)initWithContentsOfFile:(NSString *)path;
 	- (id)initWithData:(NSData *)data;

@@ -58,6 +58,11 @@
 	return nil;
 }
 
++ (DTImage *)imageWithCGImage:(CGImageRef)cgImage scale:(CGFloat)scale orientation:(NSInteger)orientation
+{
+	return nil;
+}
+
 - (id)initWithContentsOfFile:(NSString *)path
 {
 	return nil;

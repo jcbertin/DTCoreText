@@ -77,19 +77,22 @@
 		{
 			CTFontRef newFont = [fontDescriptor newMatchingFont];
 			
+			if (newFont)
+			{
 #if DTCORETEXT_SUPPORT_NS_ATTRIBUTES && TARGET_OS_IPHONE
-			if (___useiOS6Attributes)
-			{
-				// convert to UIFont
-				UIFont *uiFont = [UIFont fontWithCTFont:newFont];
-				[attributes setObject:uiFont forKey:NSFontAttributeName];
-			
-				CFRelease(newFont);
-			}
-			else
+				if (___useiOS6Attributes)
+				{
+					// convert to UIFont
+					UIFont *uiFont = [UIFont fontWithCTFont:newFont];
+					[attributes setObject:uiFont forKey:NSFontAttributeName];
+					
+					CFRelease(newFont);
+				}
+				else
 #endif
-			{
-				[attributes setObject:CFBridgingRelease(newFont) forKey:(id)kCTFontAttributeName];
+				{
+					[attributes setObject:CFBridgingRelease(newFont) forKey:(id)kCTFontAttributeName];
+				}
 			}
 		}
 		
@@ -172,9 +175,18 @@
 	
 	if (foregroundColor)
 	{
-		[appendAttributes setObject:foregroundColor forKey:(id)kCTForegroundColorAttributeName];
+#if TARGET_OS_IPHONE
+		if ([foregroundColor isKindOfClass:[UIColor class]])
+		{
+			[appendAttributes setObject:(id)[foregroundColor CGColor] forKey:(id)kCTForegroundColorAttributeName];
+		}
+		else
+#endif
+		{
+			[appendAttributes setObject:foregroundColor forKey:(id)kCTForegroundColorAttributeName];
+		}
 	}
-	
+
 	NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:appendAttributes];
 	[self appendAttributedString:newlineString];
 }

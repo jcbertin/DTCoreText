@@ -101,6 +101,7 @@
 		#define DTCORETEXT_NEEDS_ATTRIBUTE_REPLACEMENT_LEAK_FIX 1
 	#endif
 
+#if 0
 	// NSValue has sizeValue on Mac, CGSizeValue on iOS
 	#define CGSizeValue sizeValue
 
@@ -119,6 +120,7 @@
 	{
 		return NSStringFromPoint(NSPointFromCGPoint(point));
 	}
+#endif
 
 	// runtime-check if NS-style attributes are allowed
 	static inline BOOL DTCoreTextModernAttributesPossible()

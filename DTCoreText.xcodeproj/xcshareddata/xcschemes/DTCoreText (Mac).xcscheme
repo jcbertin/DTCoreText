@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A7174BC414F288F900C57464"
-               BuildableName = "Documentation"
-               BlueprintName = "Documentation"
+               BlueprintIdentifier = "E2262DC51638331500BFDAD7"
+               BuildableName = "DTCoreText.framework"
+               BlueprintName = "DTCoreText (Mac)"
                ReferencedContainer = "container:DTCoreText.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,7 +28,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A78D9F771965B7DD00C80986"
+               BuildableName = "MacUnitTest.xctest"
+               BlueprintName = "MacUnitTest"
+               ReferencedContainer = "container:DTCoreText.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E2262DC51638331500BFDAD7"
+            BuildableName = "DTCoreText.framework"
+            BlueprintName = "DTCoreText (Mac)"
+            ReferencedContainer = "container:DTCoreText.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -45,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A7174BC414F288F900C57464"
-            BuildableName = "Documentation"
-            BlueprintName = "Documentation"
+            BlueprintIdentifier = "E2262DC51638331500BFDAD7"
+            BuildableName = "DTCoreText.framework"
+            BlueprintName = "DTCoreText (Mac)"
             ReferencedContainer = "container:DTCoreText.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,6 +79,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E2262DC51638331500BFDAD7"
+            BuildableName = "DTCoreText.framework"
+            BlueprintName = "DTCoreText (Mac)"
+            ReferencedContainer = "container:DTCoreText.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
